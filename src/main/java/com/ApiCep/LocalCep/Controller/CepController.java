@@ -8,7 +8,6 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 class CepController {
     private final String VIA_CEP_URL = "https://viacep.com.br/ws/";
-
     @GetMapping("/buscar")
     public String buscarCep(@RequestParam String cep) {
         RestTemplate restTemplate = new RestTemplate();
