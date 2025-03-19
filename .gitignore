@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+##Ignore Languages
+*.html linguist-vendored
+*.css linguist-vendored
+*.js linguist-vendored
