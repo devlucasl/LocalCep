@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Cep</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #121212; /* Cor de fundo escura */
+            color: #e0e0e0; /* Texto claro */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            background-color: #333;
+            padding: 18px 0;
+        }
+        h1 {
+            color: #e0e0e0;
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+            padding-top: 10px
+        }
+        .title-bar {
+            height: 4px; /* Altura da barra */
+            background-color: #333; /* Cor da barra */
+            margin-top: 10px; /* Distância entre o título e a barra */
+        }
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #1f1f1f;
+            padding: 40px;
+            border-radius: 0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            flex: 1;
+            width: 100%;
+            min-height: 400px;
+        }
+        p {
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+        input {
+            padding: 12px;
+            width: 80%;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+        }
+        input:focus {
+            border-color: #28a745;
+        }
+        button {
+            padding: 12px 18px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        footer {
+            padding: 20px;
+            background: #333;
+            color: white;
+            text-align: center;
+            margin-top: 0;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+        footer i {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Local Cep</h1>
+    <div class="title-bar"></div>
+</div>
+
+<div class="container">
+    <p>Digite o CEP desejado para buscar informações:</p>
+    <input type="text" id="cep" placeholder="Digite o CEP (somente números)" oninput="formatarCep()">
+    <button onclick="buscarCep()">Buscar</button>
+    <div id="resultado"></div>
+</div>
+
+<footer>
+    <a href="https://github.com/devlucasl" target="_blank">Github <i class="fab fa-github"></i></a>
+</footer>
+
+<script>
+    // Função para formatar o CEP enquanto o usuário digita
+    function formatarCep() {
+        let cep = document.getElementById('cep').value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+        if (cep.length > 5) {
+            cep = cep.substring(0, 5) + '-' + cep.substring(5, 8); // Adiciona o hífen após o 5º número
+        }
+        document.getElementById('cep').value = cep; // Atualiza o campo com a formatação
+    }
+
+    function buscarCep() {
+        let cep = document.getElementById('cep').value.replace(/\D/g, ''); // Remove qualquer formato do CEP, apenas os números
+        const cepRegex = /^[0-9]{8}$/; // Regex para verificar se o CEP tem 8 números
+
+        if (!cepRegex.test(cep)) {
+            document.getElementById('resultado').innerHTML = '<p style="color: red;">Digite um CEP válido!</p>';
+            return;
+        }
+
+        fetch(`/buscar?cep=${cep}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.erro) {
+                    document.getElementById('resultado').innerHTML = '<p style="color: red;">CEP não encontrado!</p>';
+                } else {
+                    document.getElementById('resultado').innerHTML = `
+                        <p><strong>CEP:</strong> ${data.cep}</p>
+                        <p><strong>Logradouro:</strong> ${data.logradouro}</p>
+                        <p><strong>Bairro:</strong> ${data.bairro}</p>
+                        <p><strong>Cidade:</strong> ${data.localidade}</p>
+                        <p><strong>Estado:</strong> ${data.uf}</p>
+                    `;
+                }
+            })
+            .catch(error => {
+                document.getElementById('resultado').innerHTML = '<p style="color: red;">Erro ao buscar o CEP.</p>';
+                console.error('Erro ao buscar CEP:', error);
+            });
+    }
+</script>
+</body>
+</html>
