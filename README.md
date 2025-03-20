@@ -2,8 +2,8 @@
 #### Local Cep é uma aplicação para consultar as informações sobre o cep inserido
 
 # 💭 Como funciona?
-#### A aplicação é feita com consumo da API ViaCep para obter o cep inserido pelo usuário para expor informações respectivas sobre o cep
-#### Exemplo: Cep, Logradouro, Bairro, Cidade e Estado.
+#### A aplicação é feita com consumo da API ViaCep para obter o Cep inserido pelo usuário para expor informações respectivas sobre o cep.
+#### Exemplo de informações: Cep, Logradouro, Bairro, Cidade e Estado.
 
 ###
 
