@@ -13,6 +13,13 @@
 
 ![image](https://github.com/user-attachments/assets/6158c8dc-b5e9-4b13-8f57-cca22ce1b956)
 
+# 👤 Situações
+#### A aplicação não permite uso de letras ou outros caracteres, apenas números. Outroassim, autómaticamente ao digitar o cep a aplicação utiliza o formato padrão do CEP.
+#### Caso o usuário insira um cep inválido, a aplicação exibirá a seguinte mensagem 
+
+![image](https://github.com/user-attachments/assets/80dff48d-ea82-49e7-b106-0fdffb2145de)
+
+
 # 📋 Pré-requisitos
 ####  Java Development Kit - JDK
 #### Java 17+
